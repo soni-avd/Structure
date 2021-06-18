@@ -9,6 +9,10 @@
 import UIKit
 import StorageService
 
+protocol LogInViewControllerDelegate: AnyObject {
+    func checkInfo(logIn: String, psswrd: String) -> Bool
+}
+
 class LogInViewController: UIViewController {
     
     let logInImage: UIImageView = {
@@ -69,7 +73,7 @@ class LogInViewController: UIViewController {
         button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel").alpha(0.8), for: .highlighted)
         button.layer.cornerRadius = 10
         button.layer.masksToBounds = true
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -80,10 +84,11 @@ class LogInViewController: UIViewController {
     }()
     
     var containerView = UIView()
+    var delegate: LogInViewControllerDelegate?
     
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
+//    required init?(coder: NSCoder) {
+//        super.init(coder: coder)
+//    }
     
     @objc func buttonTapped() {
         print("button tapped")
@@ -111,8 +116,14 @@ class LogInViewController: UIViewController {
             containerView.addSubview($0) }
             stackLogIn.addArrangedSubview(logInEmail)
             stackLogIn.addArrangedSubview(logInPassword)
+        
+        let inspector = LogInInspector()
+        self.delegate = inspector
+        if inspector.checkInfo(logIn: logInEmail.text!, psswrd: logInPassword.text!) {
+            logInButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+
     }
-    
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
@@ -186,4 +197,12 @@ extension UIImage {
         UIGraphicsEndImageContext()
         return newImage!
     }
+}
+class LogInInspector: LogInViewControllerDelegate {
+    func checkInfo(logIn: String, psswrd: String) -> Bool {
+       let checker = Checker.shared.checkLoginAndPassword(login: logIn, password: psswrd)
+        return checker
+    }
+    
+    
 }
