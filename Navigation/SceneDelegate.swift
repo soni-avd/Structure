@@ -18,7 +18,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             guard let _ = (scene as? UIWindowScene) else { return }
             
             if let tabController = window?.rootViewController as? UITabBarController, let loginNavigation = tabController.viewControllers?.last as? UINavigationController, let loginController = loginNavigation.viewControllers.first as? LogInViewController {
-                loginController.delegate = LogInInspector()
+                let inspector = LogInInspector()
+                loginController.delegate = inspector
             }
     }
 

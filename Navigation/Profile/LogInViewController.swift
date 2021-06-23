@@ -99,9 +99,8 @@ class LogInViewController: UIViewController {
         #endif
         let userName = userService.fullName
         let profileVC = ProfileViewController(userService: userService, userName: userName)
-        let inspector = LogInInspector()
-        self.delegate = inspector
-        if inspector.checkInfo(logIn: logInEmail.text!, psswrd: logInPassword.text!) == true {
+
+        if self.delegate?.checkInfo(logIn: logInEmail.text!, psswrd: logInPassword.text!) == true {
         navigationController?.pushViewController(profileVC, animated: true)
             print("button tapped")
         } else {
