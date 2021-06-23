@@ -27,6 +27,5 @@ class Checker {
             print("try again")
             return false
         }
-        
     }
 }
