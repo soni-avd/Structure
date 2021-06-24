@@ -11,22 +11,17 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
-    var factory: MyLogInFactory
+    private var factory = MyLogInFactory()
     
-   override init() {
-    factory = MyLogInFactory()
-    super.init()
-    }
-
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let _ = (scene as? UIWindowScene) else { return }
-//                    if let tabController = window?.rootViewController as? UITabBarController, let loginNavigation = tabController.viewControllers?.last as? UINavigationController, let loginController = loginNavigation.viewControllers.first as? LogInViewController {
-                        
-        
-        //                let inspector = LogInInspector()
-        //                loginController.delegate = inspector
-//                    }
+        if let tabController = window?.rootViewController as? UITabBarController, let loginNavigation = tabController.viewControllers?.last as? UINavigationController, let loginController = loginNavigation.viewControllers.first as? LogInViewController {
+            loginController.delegate = factory.getLogIn()
+            
+            
+        }
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {

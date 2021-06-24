@@ -24,13 +24,11 @@ protocol LoginFactory {
     func getLogIn() -> LogInInspector
 }
 struct MyLogInFactory: LoginFactory {
+    let inspector = LogInInspector()
     func getLogIn() -> LogInInspector {
-        let inspector = LogInInspector()
-        LogInViewController().delegate = inspector
         return inspector
     }
 }
-
 class LogInViewController: UIViewController {
     
     let logInImage: UIImageView = {
@@ -107,11 +105,7 @@ class LogInViewController: UIViewController {
 //    required init?(coder: NSCoder) {
 //        super.init(coder: coder)
 //    }
-    func myLogInFactory() -> LogInInspector {
-        let factory = SceneDelegate.init().factory
-        let myLogInFactory = factory.getLogIn()
-        return myLogInFactory
-    }
+private var myLogInFactory = MyLogInFactory()
     @objc func buttonTapped() {
         #if DEBUG
         let userService = TestUserService()
@@ -121,7 +115,7 @@ class LogInViewController: UIViewController {
         let userName = userService.fullName
         let profileVC = ProfileViewController(userService: userService, userName: userName)
 
-        if myLogInFactory().checkInfo(logIn: logInEmail.text!, psswrd: logInPassword.text!) == true {
+        if myLogInFactory.inspector.checkInfo(logIn: logInEmail.text!, psswrd: logInPassword.text!) == true {
         navigationController?.pushViewController(profileVC, animated: true)
             print("button tapped")
         } else {
