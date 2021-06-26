@@ -8,6 +8,7 @@
 
 import UIKit
 import StorageService
+import iOSIntPackage
 
 final class PhotosViewController: UIViewController {
     
@@ -46,14 +47,18 @@ final class PhotosViewController: UIViewController {
     }
 }
 
-extension PhotosViewController: UICollectionViewDataSource {
+extension PhotosViewController: UICollectionViewDataSource, ImageLibrarySubscriber {
+    func receive(images: [UIImage]) {
+        PhotoGallery.collectionModel.append(contentsOf: images)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return PhotoGallery.collectionModel.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: PhotosCollectionViewCell.self), for: indexPath) as! PhotosCollectionViewCell
-        cell.photo.image = PhotoGallery.collectionModel[indexPath.row].image
+        cell.photo.image = PhotoGallery.collectionModel[indexPath.row]
         return cell
     }
 }
