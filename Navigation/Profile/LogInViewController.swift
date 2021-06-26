@@ -9,6 +9,26 @@
 import UIKit
 import StorageService
 
+protocol LogInViewControllerDelegate: AnyObject {
+    func checkInfo(logIn: String, psswrd: String) -> Bool
+}
+
+class LogInInspector: LogInViewControllerDelegate {
+    func checkInfo(logIn: String, psswrd: String) -> Bool {
+       let checker = Checker.shared.checkLoginAndPassword(login: logIn, password: psswrd)
+        return checker
+    }
+}
+
+protocol LoginFactory {
+    func getLogIn() -> LogInInspector
+}
+struct MyLogInFactory: LoginFactory {
+    let inspector = LogInInspector()
+    func getLogIn() -> LogInInspector {
+        return inspector
+    }
+}
 class LogInViewController: UIViewController {
     
     let logInImage: UIImageView = {
@@ -69,6 +89,7 @@ class LogInViewController: UIViewController {
         button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel").alpha(0.8), for: .highlighted)
         button.layer.cornerRadius = 10
         button.layer.masksToBounds = true
+        
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         return button
     }()
@@ -80,24 +101,26 @@ class LogInViewController: UIViewController {
     }()
     
     var containerView = UIView()
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-    
+    var delegate: LogInViewControllerDelegate?
+//    required init?(coder: NSCoder) {
+//        super.init(coder: coder)
+//    }
     @objc func buttonTapped() {
-        print("button tapped")
         #if DEBUG
         let userService = TestUserService()
-        let userName = userService.fullName
-        let profileVC = ProfileViewController(userService: userService, userName: userName)
-        self.navigationController?.pushViewController(profileVC, animated: true)
         #else
         let userService = CurrentService()
+        #endif
         let userName = userService.fullName
         let profileVC = ProfileViewController(userService: userService, userName: userName)
-        self.navigationController?.pushViewController(profileVC, animated: true)
-        #endif
+
+        if delegate?.checkInfo(logIn: logInEmail.text!, psswrd: logInPassword.text!) == true {
+        navigationController?.pushViewController(profileVC, animated: true)
+            print("button tapped")
+        } else {
+          print("wrong")
+        }
+      
     }
     
     //    MARK: viewDidLoad
@@ -111,8 +134,8 @@ class LogInViewController: UIViewController {
             containerView.addSubview($0) }
             stackLogIn.addArrangedSubview(logInEmail)
             stackLogIn.addArrangedSubview(logInPassword)
+
     }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
@@ -187,3 +210,4 @@ extension UIImage {
         return newImage!
     }
 }
+
