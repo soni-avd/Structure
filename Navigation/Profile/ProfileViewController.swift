@@ -181,6 +181,7 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let photosViewController = PhotosViewController()
         navigationController?.pushViewController(photosViewController, animated: true)
+
     }
 }
 

@@ -105,7 +105,6 @@ class LogInViewController: UIViewController {
 //    required init?(coder: NSCoder) {
 //        super.init(coder: coder)
 //    }
-private var myLogInFactory = MyLogInFactory()
     @objc func buttonTapped() {
         #if DEBUG
         let userService = TestUserService()
@@ -115,7 +114,7 @@ private var myLogInFactory = MyLogInFactory()
         let userName = userService.fullName
         let profileVC = ProfileViewController(userService: userService, userName: userName)
 
-        if myLogInFactory.inspector.checkInfo(logIn: logInEmail.text!, psswrd: logInPassword.text!) == true {
+        if delegate?.checkInfo(logIn: logInEmail.text!, psswrd: logInPassword.text!) == true {
         navigationController?.pushViewController(profileVC, animated: true)
             print("button tapped")
         } else {

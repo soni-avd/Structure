@@ -14,8 +14,7 @@ final class PhotosViewController: UIViewController {
     
     private let layout = UICollectionViewFlowLayout()
     private lazy var photosCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-    
-    
+    private let imagePublisherFacade = ImagePublisherFacade()
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(photosCollectionView)
@@ -32,18 +31,21 @@ final class PhotosViewController: UIViewController {
             photosCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ]
         NSLayoutConstraint.activate(constraints)
+        imagePublisherFacade.addImagesWithTimer(time: 1, repeat: 20)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         navigationController?.setNavigationBarHidden(false, animated: false)
-        
+        imagePublisherFacade.subscribe(self)
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
+        imagePublisherFacade.removeSubscription(for: self)
+        imagePublisherFacade.rechargeImageLibrary()
     }
 }
 
