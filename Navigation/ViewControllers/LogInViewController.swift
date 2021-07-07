@@ -79,8 +79,10 @@ class LogInViewController: UIViewController {
         return email
     }()
     
-    let logInButton: UIButton = {
-        let button = UIButton(type: .system)
+    private lazy var logInButton: MyButton = {
+        let button = MyButton(type: .system) {
+            self.buttonTapped()
+        }
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Log in", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -89,8 +91,6 @@ class LogInViewController: UIViewController {
         button.setBackgroundImage(#imageLiteral(resourceName: "blue_pixel").alpha(0.8), for: .highlighted)
         button.layer.cornerRadius = 10
         button.layer.masksToBounds = true
-        
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -105,7 +105,7 @@ class LogInViewController: UIViewController {
 //    required init?(coder: NSCoder) {
 //        super.init(coder: coder)
 //    }
-    @objc func buttonTapped() {
+    func buttonTapped() {
         #if DEBUG
         let userService = TestUserService()
         #else

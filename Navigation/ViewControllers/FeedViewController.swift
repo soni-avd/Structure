@@ -10,11 +10,34 @@ import UIKit
 import StorageService
 
 final class FeedViewController: UIViewController {
-
     
     let post = Post(title: "Post")
     
-
+    private lazy var buttonOpen: MyButton = {
+        let button = MyButton(type:.system) { [weak self] in
+            
+            let postStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let postViewController = postStoryboard.instantiateViewController(withIdentifier: "Post") as! PostViewController
+            self?.navigationController?.pushViewController(postViewController, animated: true)
+        }
+        button.setTitle("Post", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.backgroundColor = .yellow
+        return button
+    }()
+    private lazy var buttonPost: MyButton = {
+        let button = MyButton(type:.system) { [weak self] in
+            let postStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let postViewController = postStoryboard.instantiateViewController(withIdentifier: "Post") as! PostViewController
+            self?.navigationController?.pushViewController(postViewController, animated: true)
+        }
+        button.setTitle("Post", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.backgroundColor = .yellow
+        return button
+    }()
+    
+    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         print(type(of: self), #function)
@@ -36,47 +59,24 @@ final class FeedViewController: UIViewController {
         stackViewButtons.distribution = .fillEqually
         stackViewButtons.translatesAutoresizingMaskIntoConstraints = false
         
-        
-        
-             let buttonOpen: UIButton = {
-            let button = UIButton(type: .system)
-    
-            button.backgroundColor = .yellow
-            button.setTitle("Open", for: .normal)
-            button.setTitleColor(.black, for: .normal)
-            button.translatesAutoresizingMaskIntoConstraints = false
-            button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-            return button
-        }()
-        let buttonPost: UIButton = {
-            let button = UIButton(type: .system)
-            button.setTitle("Post", for: .normal)
-            button.setTitleColor(.black, for: .normal)
-            button.backgroundColor = .yellow
-            button.translatesAutoresizingMaskIntoConstraints = false
-            button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-            return button
-        }()
-        
         view.addSubview(stackViewButtons)
         stackViewButtons.addArrangedSubview(buttonOpen)
         stackViewButtons.addArrangedSubview(buttonPost)
-
-               
+        
         NSLayoutConstraint.activate([
             stackViewButtons.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stackViewButtons.centerYAnchor.constraint(equalTo: view.centerYAnchor)
             
-                                    ])
-                                        
+        ])
+        
     }
-    @objc func buttonPressed() {
-
-        let postStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let postViewController = postStoryboard.instantiateViewController(withIdentifier: "Post") as! PostViewController
-        navigationController?.pushViewController(postViewController, animated: true)
-    }
-
+    //    private func buttonPressed() -> Void {
+    //
+    //        let postStoryboard = UIStoryboard(name: "Main", bundle: nil)
+    //        let postViewController = postStoryboard.instantiateViewController(withIdentifier: "Post") as! PostViewController
+    //        navigationController?.pushViewController(postViewController, animated: true)
+    //    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print(type(of: self), #function)
