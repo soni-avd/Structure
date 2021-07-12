@@ -120,7 +120,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         }
         statusButton.snp.makeConstraints { make in
             make.leading.equalTo(contentView).inset(16)
-            make.trailing.equalTo(contentView).offset(-16)
+            make.trailing.equalTo(contentView).offset(16)
             make.height.equalTo(50)
             make.bottom.equalTo(contentView.safeAreaLayoutGuide).inset(16)
         }

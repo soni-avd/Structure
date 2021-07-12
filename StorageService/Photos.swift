@@ -13,30 +13,27 @@ import UIKit
 //    var photo: UIImage
 //}
 public struct PhotoGallery {
-   public static let collectionModel = [
-        UIImageView(image: #imageLiteral(resourceName: "1.jpg")),
-        UIImageView(image: #imageLiteral(resourceName: "2.jpg")),
-        UIImageView(image: #imageLiteral(resourceName: "3.jpg")),
-        UIImageView(image: #imageLiteral(resourceName: "4.jpg")),
-        UIImageView(image: #imageLiteral(resourceName: "5.jpg")),
-
-        UIImageView(image: #imageLiteral(resourceName: "6.jpg")),
-        UIImageView(image: #imageLiteral(resourceName: "7.jpg")),
-        UIImageView(image: #imageLiteral(resourceName: "8.jpg")),
-        UIImageView(image: #imageLiteral(resourceName: "9.jpg")),
-        UIImageView(image: #imageLiteral(resourceName: "10.jpg")),
-
-        UIImageView(image: #imageLiteral(resourceName: "11.jpg")),
-        UIImageView(image: #imageLiteral(resourceName: "12.jpg")),
-        UIImageView(image: #imageLiteral(resourceName: "13.jpg")),
-        UIImageView(image: #imageLiteral(resourceName: "14.jpg")),
-        UIImageView(image: #imageLiteral(resourceName: "15.jpg")),
-
-        UIImageView(image: #imageLiteral(resourceName: "16.jpg")),
-        UIImageView(image: #imageLiteral(resourceName: "17.jpeg")),
-        UIImageView(image: #imageLiteral(resourceName: "18.jpg")),
-        UIImageView(image: #imageLiteral(resourceName: "19.jpg")),
-        UIImageView(image: #imageLiteral(resourceName: "20.jpg")),
-
+    public static var collectionModel = [
+        UIImage(named: "1.jpg"),
+        UIImage(named: "2.jpg"),
+        UIImage(named: "3.jpg"),
+        UIImage(named: "4.jpg"),
+        UIImage(named: "5.jpg"),
+        UIImage(named: "6.jpg"),
+        UIImage(named: "7.jpg"),
+        UIImage(named: "8.jpg"),
+        UIImage(named: "9.jpg"),
+        UIImage(named: "10.jpg"),
+        UIImage(named: "11.jpg"),
+        UIImage(named: "12.jpg"),
+        UIImage(named: "13.jpg"),
+        UIImage(named: "14.jpg"),
+        UIImage(named: "15.jpg"),
+        UIImage(named: "16.jpg"),
+        UIImage(named: "17.jpeg"),
+        UIImage(named: "18.jpg"),
+        UIImage(named: "19.jpg"),
+        UIImage(named: "20.jpg")
+        
     ]
 }
