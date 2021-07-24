@@ -36,6 +36,36 @@ final class FeedViewController: UIViewController {
         button.backgroundColor = .yellow
         return button
     }()
+    private lazy var myButton: MyButton = {
+        let myButton = MyButton(type: .system) {
+            self.sendWord()
+        }
+        myButton.backgroundColor = .yellow
+        myButton.setTitle("Press me", for: .normal)
+        myButton.setTitleColor(.black, for: .normal)
+        return myButton
+    }()
+    
+    private lazy var myTextField: MyTextField = {
+        let myTextField = MyTextField(placeholder: "Пиши") { [weak self] text in
+            self?.textStorage = text
+        }
+        myTextField.backgroundColor = .yellow
+        myTextField.layer.borderColor = UIColor.black.cgColor
+        myTextField.layer.borderWidth = 1
+        return myTextField
+    }()
+    
+    private lazy var textLabel: UILabel = {
+    let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.backgroundColor = .cyan
+        label.text = "text"
+        return label
+    }()
+    
+    private var myModel: MyModel?
+    private var textStorage = ""
     
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -60,22 +90,28 @@ final class FeedViewController: UIViewController {
         stackViewButtons.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(stackViewButtons)
+        view.addSubview(myTextField)
+        view.addSubview(myButton)
+        view.addSubview(textLabel)
         stackViewButtons.addArrangedSubview(buttonOpen)
         stackViewButtons.addArrangedSubview(buttonPost)
         
         NSLayoutConstraint.activate([
             stackViewButtons.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stackViewButtons.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            stackViewButtons.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            myTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            myTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 100),
+            myTextField.widthAnchor.constraint(equalToConstant: 100),
+            myTextField.heightAnchor.constraint(equalToConstant: 30),
+            myButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            myButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -100),
+            textLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            textLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
+            textLabel.heightAnchor.constraint(equalToConstant: 30)
             
         ])
         
     }
-    //    private func buttonPressed() -> Void {
-    //
-    //        let postStoryboard = UIStoryboard(name: "Main", bundle: nil)
-    //        let postViewController = postStoryboard.instantiateViewController(withIdentifier: "Post") as! PostViewController
-    //        navigationController?.pushViewController(postViewController, animated: true)
-    //    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -115,5 +151,17 @@ final class FeedViewController: UIViewController {
             return
         }
         postViewController.post = post
+    }
+    private func sendWord() {
+        textLabel.text = myTextField.text
+        let text = myModel?.check(word: myTextField.text!)
+        if text == true {
+            print("send 1")
+            textLabel.textColor = .green
+        } else {
+            print("send")
+            textLabel.textColor = .red
+
+        }
     }
 }
