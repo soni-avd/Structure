@@ -52,6 +52,7 @@ final class PhotosViewController: UIViewController {
 extension PhotosViewController: UICollectionViewDataSource, ImageLibrarySubscriber {
     func receive(images: [UIImage]) {
         PhotoGallery.collectionModel.append(contentsOf: images)
+        photosCollectionView.reloadData()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

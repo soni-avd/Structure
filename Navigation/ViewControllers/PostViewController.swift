@@ -15,7 +15,6 @@ class PostViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        title = post?.title
-    title = "Post"
+        title = "Post"
     }
 }

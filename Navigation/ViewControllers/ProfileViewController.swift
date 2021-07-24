@@ -40,11 +40,12 @@ class ProfileViewController: UIViewController {
     
     let hv = ProfileHeaderView()
     
-    let buttonX: UIButton = {
-        let x = UIButton(type: .close)
+    private lazy var buttonX: MyButton = {
+        var x = MyButton(type: .close) { [weak self] in
+            self?.closeAnimation()
+        }
         x.isUserInteractionEnabled = true
         x.translatesAutoresizingMaskIntoConstraints = false
-        x.addTarget(self, action: #selector(closeAnimation), for: .touchUpInside)
         x.alpha = 0
         return x
     }()
@@ -113,7 +114,7 @@ class ProfileViewController: UIViewController {
             make.width.height.equalTo(15)
 }
     }
-    @objc func closeAnimation() {
+    func closeAnimation() {
         print(#function)
         UIView.animateKeyframes(withDuration: 0.8, delay: 0, options: [], animations: {
             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.3 / 0.8) {

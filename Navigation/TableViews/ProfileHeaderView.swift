@@ -60,8 +60,10 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         text.addTarget(self, action: #selector(statusTextChanged(_:)), for: .editingChanged)
         return text
     }()
-    lazy var statusButton: UIButton = {
-        let button = UIButton(type: .system)
+    lazy var statusButton: MyButton = {
+        let button = MyButton(type: .system) {
+            self.buttonPressed()
+        }
         button.setTitle("Show status", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .systemBlue
@@ -71,12 +73,11 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOpacity = 0.7
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         return button
     }()
     var statusText: String?
         
-    @objc func buttonPressed() {
+    func buttonPressed() {
         print("\(profileInfo.text!)")
         if let statusText = statusText {
             profileInfo.text = statusText
@@ -120,7 +121,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         }
         statusButton.snp.makeConstraints { make in
             make.leading.equalTo(contentView).inset(16)
-            make.trailing.equalTo(contentView).offset(-16)
+            make.trailing.equalTo(contentView).offset(16)
             make.height.equalTo(50)
             make.bottom.equalTo(contentView.safeAreaLayoutGuide).inset(16)
         }
